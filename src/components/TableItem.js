@@ -1,20 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 
 function resolveObject(obj) {
     return Object.entries(obj);
 }
 
-function createSubTable(item) {
+function SubTableItem(props) {
+    const [expanded, setExpanded] = useState(true);
+
     return (
         <tr>
-            <td>{item[0]}</td>
+            <td
+                onClick={() => setExpanded(!expanded)}
+            >
+                {props.item[0]}
+            </td>
             <td>
-                <table>
-                    <tbody>
-                        { createTable(resolveObject(item[1])) }
-                    </tbody>
-                </table>
+                {
+                    expanded ?
+                    <table>
+                        <tbody>
+                            { createTable(resolveObject(props.item[1])) }
+                        </tbody>
+                    </table>
+                    :
+                    "..."
+                }
             </td>
         </tr>
     );
@@ -30,7 +41,7 @@ function createTable(items) {
 
         else if (typeof item[1] === 'object') {
             subTable.push(
-                createSubTable(item)
+                <SubTableItem item={item} />
             );
         }
     });
@@ -51,7 +62,7 @@ function handleSingle(obj) {
 
         if (typeof item[1] === 'object') {
             table.push(
-                createSubTable(item)
+                <SubTableItem item={item} />
             );
         }
     });
@@ -76,6 +87,5 @@ export default function TableItem(props) {
             </tbody>
         </table>
     );
-    
 }
 
