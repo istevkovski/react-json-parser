@@ -4,7 +4,7 @@ import './App.css';
 
 function App () {
 	const [users, setUsers] = useState([]);
-	const [userJSON, setUserJSON] = useState("");
+	const customJSONRef = React.useRef();
 
 	useEffect(() => {
 		async function fetchData() {
@@ -14,15 +14,12 @@ function App () {
 		}
 
 		fetchData();
-	}, [setUsers, setUserJSON])
+	}, [setUsers])
 
-	function handleTextArea(event) {
-		setUserJSON(event.target.value);
-	}
+	function handleSendJSON(e) {
 
-	function handleSendJSON() {
 		try {
-			setUsers(JSON.parse(userJSON));
+			setUsers(JSON.parse(customJSONRef.current.value));
 		} catch (e) {
 			alert('JSON NOT VALID');
 			return false;
@@ -33,8 +30,7 @@ function App () {
 		<>
 			<div className="json-input">
 				<textarea
-					onChange={handleTextArea}
-					value={userJSON}
+					ref={customJSONRef}
 				></textarea>
 				<button onClick={handleSendJSON}>Send</button>
 			</div>
