@@ -1,47 +1,47 @@
 [
-    {
-        "_id": "5eaaf3b8a48a8b9230c26f6d",
-        "index": 0,
-        "guid": "35dfa0a5-dacc-46b0-9651-3cb0af2636fa",
-        "isActive": false,
-        "balance": "$2,480.81",
-        "picture": "http://placehold.it/32x32",
-        "age": 26,
-        "eyeColor": "green",
-        "name": "Marianne Lucas",
-        "gender": "female",
-        "company": "GLASSTEP",
-        "email": "mariannelucas@glasstep.com",
-        "phone": "+1 (942) 472-3149",
-        "address": "682 Bainbridge Street, Durham, Maine, 7166",
-        "about": "Occaecat exercitation elit nostrud culpa anim enim enim id voluptate. Voluptate eu sunt voluptate Lorem amet in in cupidatat ut deserunt aute id. Anim non velit in proident Lorem.\r\n",
-        "registered": "2018-11-09T08:34:36 -01:00",
-        "latitude": -0.026283,
-        "longitude": 104.412494,
-        "tags": [
-            "tempor",
-            "laboris",
-            "amet",
-            "consectetur",
-            "do",
-            "tempor",
-            "incididunt"
-        ],
-        "friends": [
-            {
-                "id": 0,
-                "name": "Edith Calhoun"
-            },
-            {
-                "id": 1,
-                "name": "Fowler Moss"
-            },
-            {
-                "id": 2,
-                "name": "Walsh Barrera"
-            }
-        ],
-        "greeting": "Hello, Marianne Lucas! You have 3 unread messages.",
-        "favoriteFruit": "strawberry"
-    }
+	{
+		"_id": "5eaaf3b8a48a8b9230c26f6d",
+		"index": 0,
+		"guid": "35dfa0a5-dacc-46b0-9651-3cb0af2636fa",
+		"isActive": false,
+		"balance": "$2,480.81",
+		"picture": "http://placehold.it/32x32",
+		"age": 26,
+		"eyeColor": "green",
+		"name": "Marianne Lucas",
+		"gender": "female",
+		"company": "GLASSTEP",
+		"email": "mariannelucas@glasstep.com",
+		"phone": "+1 (942) 472-3149",
+		"address": "682 Bainbridge Street, Durham, Maine, 7166",
+		"about": "Occaecat exercitation elit nostrud culpa anim enim enim id voluptate. Voluptate eu sunt voluptate Lorem amet in in cupidatat ut deserunt aute id. Anim non velit in proident Lorem.\r\n",
+		"registered": "2018-11-09T08:34:36 -01:00",
+		"latitude": -0.026283,
+		"longitude": 104.412494,
+		"tags": [
+			"tempor",
+			"laboris",
+			"amet",
+			"consectetur",
+			"do",
+			"tempor",
+			"incididunt"
+		],
+		"friends": [
+			{
+				"id": 0,
+				"name": "Edith Calhoun"
+			},
+			{
+				"id": 1,
+				"name": "Fowler Moss"
+			},
+			{
+				"id": 2,
+				"name": "Walsh Barrera"
+			}
+		],
+		"greeting": "Hello, Marianne Lucas! You have 3 unread messages.",
+		"favoriteFruit": "strawberry"
+	}
 ]
