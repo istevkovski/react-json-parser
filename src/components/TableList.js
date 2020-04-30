@@ -6,11 +6,10 @@ import './Table.css'
 export default function TableList(props) {
 
     function processAllInformation(data = props.dataList) {
-        return data.map((single, index) => {
-            if(index < 1) {
-                if (typeof single === 'object')
-                    return <TableItem table={single} />;
-            }
+        console.log(data);
+        return data.map((single) => {
+            if (typeof single === 'object')
+                return <TableItem table={single} />;
         });
     }
 

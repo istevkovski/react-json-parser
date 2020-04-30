@@ -6,25 +6,33 @@ function resolveObject(obj) {
 }
 
 function SubTableItem(props) {
-    const [expanded, setExpanded] = useState(true);
+    const [expanded, setExpanded] = useState(false);
 
     return (
         <tr>
             <td
                 onClick={() => setExpanded(!expanded)}
             >
-                {props.item[0]}
+                <div className="expandable">
+                    {props.item[0]}
+                    {
+                        expanded ?
+                        <span>-</span>
+                        :
+                        <span>+</span>
+                    }
+                </div>
             </td>
             <td>
                 {
-                    expanded ?
-                    <table>
+                    <>
+                    <table className={expanded ? null : 'hide'}>
                         <tbody>
                             { createTable(resolveObject(props.item[1])) }
                         </tbody>
                     </table>
-                    :
-                    "..."
+                    <span className={expanded ? 'hide' : null} >...</span>
+                    </>
                 }
             </td>
         </tr>

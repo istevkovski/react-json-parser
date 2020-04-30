@@ -6,8 +6,15 @@ table {
     width: 100%;
 }
 
-.nested {
-    margin-left: 20px;
+.expandable {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
 }
 
 td, th {
