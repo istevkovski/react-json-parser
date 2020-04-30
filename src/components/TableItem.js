@@ -44,12 +44,12 @@ function createTable(items) {
 
     items.map((item, index) => {
         if ( typeof item[1] === 'string' || typeof item[1] === 'number') {
-            subTable.push(<TableSingleCell item={item} />);
+            subTable.push(<TableSingleCell item={item} key={`sC${index}`}/>);
         }
 
         else if (typeof item[1] === 'object') {
             subTable.push(
-                <SubTableItem item={item} />
+                <SubTableItem item={item} key={`sT${index}`}/>
             );
         }
     });
@@ -64,13 +64,13 @@ function handleSingle(obj) {
     object.map((item, index) => {
         if ( typeof item[1] === 'string' || typeof item[1] === 'number') {
             table.push(
-                <TableSingleCell item={item} />
+                <TableSingleCell item={item} key={`sC${index}`}/>
             );
         }
 
         if (typeof item[1] === 'object') {
             table.push(
-                <SubTableItem item={item} />
+                <SubTableItem item={item} key={`sT${index}`}/>
             );
         }
     });
