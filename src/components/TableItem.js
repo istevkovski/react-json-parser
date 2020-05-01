@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
 function resolveObject(obj) {
@@ -6,17 +6,22 @@ function resolveObject(obj) {
 }
 
 function SubTableItem(props) {
-    const [expanded, setExpanded] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(false);
+    const expanded = props.expanded;
+
+    useEffect(() => {
+        setIsExpanded(expanded);
+    }, [expanded]);
 
     return (
         <tr>
             <td
-                onClick={() => setExpanded(!expanded)}
+                onClick={() => setIsExpanded(!isExpanded)}
             >
                 <div className="expandable">
                     {props.item[0]}
                     {
-                        expanded ?
+                        isExpanded ?
                         <span>-</span>
                         :
                         <span>+</span>
@@ -26,12 +31,12 @@ function SubTableItem(props) {
             <td>
                 {
                     <>
-                    <table className={expanded ? null : 'hide'}>
+                    <table className={isExpanded ? null : 'hide'}>
                         <tbody>
-                            { createTable(resolveObject(props.item[1])) }
+                            { createTable(resolveObject(props.item[1]), expanded) }
                         </tbody>
                     </table>
-                    <span className={expanded ? 'hide' : null} >...</span>
+                    <span className={isExpanded ? 'hide' : null} >...</span>
                     </>
                 }
             </td>
@@ -39,7 +44,11 @@ function SubTableItem(props) {
     );
 }
 
-function createTable(items) {
+SubTableItem.defaultProps = {
+    expanded: false
+}
+
+function createTable(items, expandedProp) {
     let subTable = [];
 
     items.map((item, index) => {
@@ -49,7 +58,7 @@ function createTable(items) {
 
         else if (typeof item[1] === 'object') {
             subTable.push(
-                <SubTableItem item={item} key={`sT${index}`}/>
+                <SubTableItem item={item} key={`sT${index}`} expanded={expandedProp}/>
             );
         }
     });
@@ -57,7 +66,7 @@ function createTable(items) {
     return subTable;
 }
 
-function handleSingle(obj) {
+function handleSingle(obj, props) {
     let object = resolveObject(obj);
     let table = [];
 
@@ -70,7 +79,7 @@ function handleSingle(obj) {
 
         if (typeof item[1] === 'object') {
             table.push(
-                <SubTableItem item={item} key={`sT${index}`}/>
+                <SubTableItem item={item} key={`sT${index}`} expanded={props.expanded}/>
             );
         }
     });
@@ -91,7 +100,7 @@ export default function TableItem(props) {
     return(
         <table>
             <tbody id="table-body">
-                {handleSingle(props.table)}
+                {handleSingle(props.table, props)}
             </tbody>
         </table>
     );
