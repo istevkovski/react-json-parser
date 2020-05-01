@@ -31,6 +31,7 @@ function App () {
 			<div className="json-input">
 				<textarea
 					ref={customJSONRef}
+					placeholder="Enter custom JSON here"
 				></textarea>
 				<button onClick={handleSendJSON}>Send</button>
 			</div>
