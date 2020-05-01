@@ -19,7 +19,7 @@ export default function TableList(props) {
 
     return(
         <React.Fragment>
-            <button onClick={expandAll}>{expanded ? 'Collapse All' : 'Expand All'}</button>
+            <button className='expand' onClick={expandAll}>{expanded ? 'Collapse All' : 'Expand All'}</button>
             { processAllInformation() }
         </React.Fragment>
     );

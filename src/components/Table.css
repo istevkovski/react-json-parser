@@ -13,14 +13,22 @@ table {
     cursor: pointer;
 }
 
+button.expand {
+    width: 140px;
+    height: 50px;
+    margin-bottom: 40px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
 .hide {
     display: none;
 }
 
 td, th {
-    border: 1px solid #dddddd;
+    border: 1px solid #4CAF50;
     text-align: left;
-    padding: 8px;
+    padding: 15px;
 }
 
 tr:nth-child(even) {
