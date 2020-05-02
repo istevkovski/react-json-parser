@@ -39,7 +39,9 @@ export default function TableList(props) {
                         key={`rT${index}`}
                         expanded={expanded}
                         isAnyExpanded={closeAllChildren}
-                        counterHandler={counterHandler}/>
+                        counterHandler={counterHandler}
+                        counter={counter}
+                    />
                 );
         });
     }

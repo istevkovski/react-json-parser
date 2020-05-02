@@ -18,7 +18,9 @@ function SubTableItem(props) {
 
     useEffect(() => {
         if(isExpanded !== props.expanded)
-            props.counter(isExpanded ? 1 : -1)
+            props.counterHandler(1)
+        else if(isExpanded === props.expanded && props.counter > 0 && props.expanded === false)
+            props.counterHandler(-1)
     }, [isExpanded])
 
     return (
@@ -41,7 +43,7 @@ function SubTableItem(props) {
                     <>
                     <table className={isExpanded ? null : 'hide'}>
                         <tbody>
-                            { createTable(resolveObject(props.item[1]), props.expanded, props.isAnyExpanded, props.counter) }
+                            { createTable(resolveObject(props.item[1]), props.expanded, props.isAnyExpanded, props.counterHandler, props.counter) }
                         </tbody>
                     </table>
                     <span className={isExpanded ? 'hide' : null} >...</span>
@@ -52,7 +54,7 @@ function SubTableItem(props) {
     );
 }
 
-function createTable(items, expandedProp, isAnyExpanded, counterHandler) {
+function createTable(items, expandedProp, isAnyExpanded, counterHandler, counter) {
     let subTable = [];
 
     items.map((item, index) => {
@@ -62,7 +64,7 @@ function createTable(items, expandedProp, isAnyExpanded, counterHandler) {
 
         else if (typeof item[1] === 'object') {
             subTable.push(
-                <SubTableItem item={item} key={`sT${index}`} expanded={expandedProp} isAnyExpanded={isAnyExpanded} counter={counterHandler}/>
+                <SubTableItem item={item} key={`sT${index}`} expanded={expandedProp} isAnyExpanded={isAnyExpanded} counterHandler={counterHandler} counter={counter}/>
             );
         }
     });
@@ -82,7 +84,7 @@ function handleSingle(obj, props) {
         }
         else if (typeof item[1] === 'object') {
             table.push(
-                <SubTableItem item={item} key={`sT${index}`} expanded={props.expanded} isAnyExpanded={props.isAnyExpanded} counter={props.counterHandler}/>
+                <SubTableItem item={item} key={`sT${index}`} expanded={props.expanded} isAnyExpanded={props.isAnyExpanded} counterHandler={props.counterHandler} counter={props.counter}/>
             );
         }
     });
