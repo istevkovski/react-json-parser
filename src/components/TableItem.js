@@ -7,11 +7,19 @@ function resolveObject(obj) {
 
 function SubTableItem(props) {
     const [isExpanded, setIsExpanded] = useState(false);
-    const expanded = props.expanded;
 
     useEffect(() => {
-        setIsExpanded(expanded);
-    }, [expanded]);
+        if(isExpanded !== props.expanded)
+            setIsExpanded(props.expanded);
+            
+        else if(props.isAnyExpanded === true)
+            setIsExpanded(false);
+    }, [props.expanded, props.isAnyExpanded]);
+
+    useEffect(() => {
+        if(isExpanded !== props.expanded)
+            props.counter(isExpanded ? 1 : -1)
+    }, [isExpanded])
 
     return (
         <tr>
@@ -33,7 +41,7 @@ function SubTableItem(props) {
                     <>
                     <table className={isExpanded ? null : 'hide'}>
                         <tbody>
-                            { createTable(resolveObject(props.item[1]), expanded) }
+                            { createTable(resolveObject(props.item[1]), props.expanded, props.isAnyExpanded, props.counter) }
                         </tbody>
                     </table>
                     <span className={isExpanded ? 'hide' : null} >...</span>
@@ -44,11 +52,7 @@ function SubTableItem(props) {
     );
 }
 
-SubTableItem.defaultProps = {
-    expanded: false
-}
-
-function createTable(items, expandedProp) {
+function createTable(items, expandedProp, isAnyExpanded, counterHandler) {
     let subTable = [];
 
     items.map((item, index) => {
@@ -58,7 +62,7 @@ function createTable(items, expandedProp) {
 
         else if (typeof item[1] === 'object') {
             subTable.push(
-                <SubTableItem item={item} key={`sT${index}`} expanded={expandedProp}/>
+                <SubTableItem item={item} key={`sT${index}`} expanded={expandedProp} isAnyExpanded={isAnyExpanded} counter={counterHandler}/>
             );
         }
     });
@@ -76,10 +80,9 @@ function handleSingle(obj, props) {
                 <TableSingleCell item={item} key={`sC${index}`}/>
             );
         }
-
-        if (typeof item[1] === 'object') {
+        else if (typeof item[1] === 'object') {
             table.push(
-                <SubTableItem item={item} key={`sT${index}`} expanded={props.expanded}/>
+                <SubTableItem item={item} key={`sT${index}`} expanded={props.expanded} isAnyExpanded={props.isAnyExpanded} counter={props.counterHandler}/>
             );
         }
     });
