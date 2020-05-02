@@ -3,6 +3,7 @@ import TableItem from './TableItem';
 
 import './Table.css'
 
+
 export default class TableList extends React.Component {
     constructor(props) {
         super(props);
@@ -10,17 +11,16 @@ export default class TableList extends React.Component {
         this.state = {
             expanded: false,
             expandedCounter: 0,
-            closeAllChilder: false
+            closeAllChilden: false
         }
     }
 
 	expandAll = () => {
         if(this.state.expandedCounter > 0)
-            this.setState({ closeAllChilder: true }, () => {
-                this.setState({expanded: false, closeAllChilder: false, expandedCounter: 0})
+            this.setState({ closeAllChilden: true }, () => {
+                this.setState({expanded: false, closeAllChilden: false, expandedCounter: 0})
             });
-        else if (this.state.expandedCounter === 0)
-            this.setState({ expanded: true, expandedCounter: 1});
+        else if (this.state.expandedCounter === 0) this.setState({ expanded: true, expandedCounter: 1});
     }
 
     counterHandler = (value) => {
@@ -28,6 +28,7 @@ export default class TableList extends React.Component {
     }
 
     processAllInformation(data = this.props.dataList) {
+        if (!Array.isArray(data)) data = [data];
         return data.map((single, index) => {
             if (typeof single === 'object')
                 return(
@@ -35,7 +36,7 @@ export default class TableList extends React.Component {
                         table={single}
                         key={`rT${index}`}
                         expanded={this.state.expanded}
-                        isAnyExpanded={this.state.closeAllChilder}
+                        isAnyExpanded={this.state.closeAllChilden}
                         counter={this.counterHandler}/>
                 );
         });

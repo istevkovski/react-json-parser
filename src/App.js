@@ -6,16 +6,12 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			users: []
-		}
+		this.state = { users: [] }
 
 		this.customJSONRef = React.createRef();
 	}
 
-	componentDidMount() {
-		this.fetchData();
-	};
+	componentDidMount() { this.fetchData() };
 
 	async fetchData() {
 		await fetch('https://jsonplaceholder.typicode.com/users')
@@ -25,7 +21,7 @@ class App extends React.Component {
 
 	handleSendJSON = () => {
 		try {
-			this.setState({ users: JSON.parse(this.customJSONRef.current.value)});
+			this.setState({ users: JSON.parse(this.customJSONRef.current.value)})
 		} catch {
 			alert('JSON NOT VALID');
 			return false;

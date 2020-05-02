@@ -16,14 +16,10 @@ class SubTableItem extends React.Component {
 
     componentDidUpdate(prevProps) {
         if(this.state.isExpanded !== this.props.expanded && this.props.expanded !== prevProps.expanded)
-        {
             this.setState({ isExpanded: this.props.expanded })
-        }
-
+            
         else if(this.props.isAnyExpanded === true)
-        {
             this.setState({ isExpanded: false })
-        }
     }
 
     render() {
@@ -85,6 +81,15 @@ function createTable(items, expandedProp, counterHandler, isAnyExpanded) {
     return subTable;
 }
 
+function TableSingleCell(props) {
+    return(
+        <tr className="table-item">
+            <td>{props.item[0]}</td>
+            <td>{props.item[1]}</td>
+        </tr>
+    )
+}
+
 function handleSingle(obj, props) {
     let object = resolveObject(obj);
     let table = [];
@@ -96,7 +101,7 @@ function handleSingle(obj, props) {
             );
         }
 
-        if (typeof item[1] === 'object') {
+        else if (typeof item[1] === 'object') {
             table.push(
                 <SubTableItem item={item} key={`sT${index}`} expanded={props.expanded} isAnyExpanded={props.isAnyExpanded} counter={props.counter}/>
             );
@@ -104,15 +109,6 @@ function handleSingle(obj, props) {
     });
 
     return table;
-}
-
-function TableSingleCell(props) {
-    return(
-        <tr className="table-item">
-            <td>{props.item[0]}</td>
-            <td>{props.item[1]}</td>
-        </tr>
-    )
 }
 
 export default function TableItem(props) {
