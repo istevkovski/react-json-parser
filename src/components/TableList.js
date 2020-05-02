@@ -16,11 +16,11 @@ export default class TableList extends React.Component {
     }
 
 	expandAll = () => {
-        if(this.state.expandedCounter > 0)
+        if(this.state.expandedCounter > 0 || this.state.expanded === true)
             this.setState({ closeAllChilden: true }, () => {
                 this.setState({expanded: false, closeAllChilden: false, expandedCounter: 0})
             });
-        else if (this.state.expandedCounter === 0) this.setState({ expanded: true, expandedCounter: 1});
+        else if (this.state.expandedCounter <= 0 && this.state.expanded === false) this.setState({ expanded: true, expandedCounter: 1});
     }
 
     counterHandler = (value) => {
@@ -46,7 +46,11 @@ export default class TableList extends React.Component {
         return(
             <React.Fragment>
                 <button className='expand' onClick={this.expandAll}>
-                    {this.state.expandedCounter > 0 ? 'Collapse All' : 'Expand All'}
+                    {(() => {
+                        if(this.state.expandedCounter > 0 || this.state.expanded === true)
+                            return 'Collapse All'
+                        else return 'Expand All'
+                    })()}
                 </button>
                 { this.processAllInformation() }
             </React.Fragment>
