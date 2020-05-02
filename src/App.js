@@ -1,43 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import TableList from './components/TableList';
 import './App.css';
 
-function App () {
-	const [users, setUsers] = useState([]);
-	const customJSONRef = React.useRef();
+class App extends React.Component {
+	constructor(props) {
+		super(props);
 
-	useEffect(() => {
-		async function fetchData() {
-			await fetch('https://jsonplaceholder.typicode.com/users')
-				.then(response => response.json())
-				.then(data => setUsers(data));
+		this.state = {
+			users: []
 		}
 
-		fetchData();
-	}, [setUsers])
+		this.customJSONRef = React.createRef();
+	}
 
-	function handleSendJSON(e) {
+	componentDidMount() {
+		this.fetchData();
+	};
 
+	async fetchData() {
+		await fetch('https://jsonplaceholder.typicode.com/users')
+			.then(response => response.json())
+			.then(data => this.setState({ users: data }));
+	};
+
+	handleSendJSON = () => {
 		try {
-			setUsers(JSON.parse(customJSONRef.current.value));
-		} catch (e) {
+			this.setState({ users: JSON.parse(this.customJSONRef.current.value)});
+		} catch {
 			alert('JSON NOT VALID');
 			return false;
 		}
 	}
 
-	return (
-		<>
-			<div className="json-input">
-				<textarea
-					ref={customJSONRef}
-					placeholder="Enter custom JSON here"
-				></textarea>
-				<button onClick={handleSendJSON}>Send</button>
-			</div>
-			<TableList dataList={users}/>
-		</>
-	);
+	render() {
+		return (
+			<>
+				<div className="json-input">
+					<textarea
+						ref={this.customJSONRef}
+						placeholder="Enter custom JSON here"
+					></textarea>
+					<button onClick={this.handleSendJSON}>Send</button>
+				</div>
+				<TableList dataList={this.state.users}/>
+			</>
+		)
+	};
 }
 
 export default App;
