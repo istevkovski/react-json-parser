@@ -1,12 +1,14 @@
 import React from 'react';
 import TableList from './components/TableList';
+
 import './App.css';
+
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { users: [] }
+		this.state = { data: [] }
 
 		this.customJSONRef = React.createRef();
 	}
@@ -16,12 +18,12 @@ class App extends React.Component {
 	async fetchData() {
 		await fetch('https://jsonplaceholder.typicode.com/users')
 			.then(response => response.json())
-			.then(data => this.setState({ users: data }));
+			.then(data => this.setState({ data: data }));
 	};
 
 	handleSendJSON = () => {
 		try {
-			this.setState({ users: JSON.parse(this.customJSONRef.current.value)})
+			this.setState({ data: JSON.parse(this.customJSONRef.current.value)})
 		} catch {
 			alert('JSON NOT VALID');
 			return false;
@@ -38,7 +40,7 @@ class App extends React.Component {
 					></textarea>
 					<button onClick={this.handleSendJSON}>Send</button>
 				</div>
-				<TableList dataList={this.state.users}/>
+				<TableList dataList={this.state.data}/>
 			</>
 		)
 	};

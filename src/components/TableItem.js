@@ -15,11 +15,11 @@ class SubTableItem extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.state.isExpanded !== this.props.expanded && this.props.expanded !== prevProps.expanded)
-            this.setState({ isExpanded: this.props.expanded })
-            
-        else if(this.props.isAnyExpanded === true)
-            this.setState({ isExpanded: false })
+        if(this.state.isExpanded !== this.props.expanded && this.props.expanded !== prevProps.expanded){
+            this.setState({ isExpanded: this.props.expanded }, () => {
+                this.props.counterHandler(this.state.isExpanded > 0 ? 1 : -1);
+            });
+        }
     }
 
     render() {
@@ -28,8 +28,8 @@ class SubTableItem extends React.Component {
                 <td
                     onClick={() => {
                         this.setState({ isExpanded: !this.state.isExpanded }, () => {
-                            this.props.counter(this.state.isExpanded ? 1 : -1)
-                        })
+                            this.props.counterHandler(this.state.isExpanded ? 1 : -1);
+                        });
                     }}
                 >
                     <div className="expandable">
@@ -47,7 +47,7 @@ class SubTableItem extends React.Component {
                         <>
                         <table className={this.state.isExpanded ? null : 'hide'}>
                             <tbody>
-                                { createTable(resolveObject(this.props.item[1]), this.props.expanded, this.props.counter, this.props.isAnyExpanded) }
+                                { createTable(resolveObject(this.props.item[1]), this.props.expanded, this.props.counterHandler, this.props.counter) }
                             </tbody>
                         </table>
                         <span className={this.state.isExpanded ? 'hide' : null} >...</span>
@@ -58,7 +58,7 @@ class SubTableItem extends React.Component {
     )};
 }
 
-function createTable(items, expandedProp, counterHandler, isAnyExpanded) {
+function createTable(items, expandedProp, counterHandler, counter) {
     let subTable = [];
 
     items.map((item, index) => {
@@ -72,8 +72,9 @@ function createTable(items, expandedProp, counterHandler, isAnyExpanded) {
                     item={item}
                     key={`sT${index}`}
                     expanded={expandedProp}
-                    isAnyExpanded={isAnyExpanded}
-                    counter={counterHandler}/>
+                    counterHandler={counterHandler}
+                    counter={counter}
+                    />
             );
         }
     });
@@ -103,7 +104,12 @@ function handleSingle(obj, props) {
 
         else if (typeof item[1] === 'object') {
             table.push(
-                <SubTableItem item={item} key={`sT${index}`} expanded={props.expanded} isAnyExpanded={props.isAnyExpanded} counter={props.counter}/>
+                <SubTableItem
+                    item={item}
+                    key={`sT${index}`}
+                    expanded={props.expanded}
+                    counterHandler={props.counterHandler}
+                    counter={props.counter}/>
             );
         }
     });

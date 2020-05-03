@@ -10,21 +10,25 @@ export default class TableList extends React.Component {
 
         this.state = {
             expanded: false,
-            expandedCounter: 0,
-            closeAllChilden: false
+            counter: 0
         }
     }
 
 	expandAll = () => {
-        if(this.state.expandedCounter > 0 || this.state.expanded === true)
-            this.setState({ closeAllChilden: true }, () => {
-                this.setState({expanded: false, closeAllChilden: false, expandedCounter: 0})
+        if(this.state.counter > 0)
+            this.setState({expanded: true}, () => {
+                this.setState({expanded: false})
             });
-        else if (this.state.expandedCounter <= 0 && this.state.expanded === false) this.setState({ expanded: true, expandedCounter: 1});
+        else if(this.state.counter === 0)
+            this.setState({expanded: false}, () => {
+                this.setState({expanded: true})
+            });
     }
 
     counterHandler = (value) => {
-        this.setState({ expandedCounter: this.state.expandedCounter + value})
+        this.setState((prevState, props) => {
+            return { counter: prevState.counter + value }
+        });
     }
 
     processAllInformation(data = this.props.dataList) {
@@ -36,8 +40,8 @@ export default class TableList extends React.Component {
                         table={single}
                         key={`rT${index}`}
                         expanded={this.state.expanded}
-                        isAnyExpanded={this.state.closeAllChilden}
-                        counter={this.counterHandler}/>
+                        counter={this.state.counter}
+                        counterHandler={this.counterHandler}/>
                 );
         });
     }
@@ -47,7 +51,7 @@ export default class TableList extends React.Component {
             <React.Fragment>
                 <button className='expand' onClick={this.expandAll}>
                     {(() => {
-                        if(this.state.expandedCounter > 0 || this.state.expanded === true)
+                        if(this.state.counter > 0)
                             return 'Collapse All'
                         else return 'Expand All'
                     })()}
